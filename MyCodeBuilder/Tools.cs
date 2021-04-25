@@ -67,18 +67,18 @@ namespace MyCodeBuilder
         /// <returns></returns>
         public static string DbDefaultToCSharp(string v)
         {
-            string str = "";
+            string str;
             //取时间
             if (v.Contains("getdate()"))
             {
                 str = " = DateTime.Now";
             }
             //取数字
-            str = getRegexResult(@"\(\((\d+)\)\)", v, "num");
+            str = GetRegexResult(@"\(\((\d+)\)\)", v, "num");
             //取字符串
             if (str == "")
             {
-                str = getRegexResult(@"\(N?'(.+)'\)", v, "string");
+                str = GetRegexResult(@"\(N?'(.+)'\)", v, "string");
             }
             return str;
         }
@@ -90,15 +90,15 @@ namespace MyCodeBuilder
         /// <param name="v">需要匹配的内容</param>
         /// <param name="type">匹配内容的类型（num|数字 string|字符串）</param>
         /// <returns></returns>
-        public static string getRegexResult(string pat, string v, string type)
+        public static string GetRegexResult(string pat, string v, string type)
         {
             string str = "";
             Regex r = new Regex(pat, RegexOptions.IgnoreCase);
             Match m = r.Match(v);
-            int matchCount = 0;
+            //int matchCount;
             if (m.Success)
             {
-                ++matchCount;
+                //++matchCount;
                 Group g = m.Groups[1];
                 if (type == "num")
                 {
